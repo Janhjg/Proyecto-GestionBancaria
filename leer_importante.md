@@ -17,3 +17,8 @@ A final de cada dia nos reunimos todos, hacemos pruebas y añadimos al main
  * Ingresar saldo : Incrementa el saldo del usuario según lo que ingrese.
  * Retirar dinero : Decrementa el saldo del usuario según lo que retire.
  * Transferir dinero entre usuarios : Resta la cantidad transferida al usuario que la realiza y se la suma al usuario de destino.
+
+
+## Menú
+Muestra por pantalla y permite al usuario realizar las acciones que se definen en operaciones bancarias.
+ 
