@@ -6,9 +6,8 @@ usar el archivo **funciones.py** para ir poniendo alli todas ytener limpio **ban
 ## Trabajar solo en dev u otras ramas nuevas
 A final de cada dia nos reunimos todos, hacemos pruebas y añadimos al main
 
-### Pedido 
-* Todos debemos colaborar 
-* Toma de decision conjunta
-* Comunicacion constante 
-
-## Hagamoslo lo mejor posible
+## Gestion de usuario
+  * Crear nuevo usuario
+  * Inicio de sesion
+  * Validacion
+  * Evitar perfiles duplicados
