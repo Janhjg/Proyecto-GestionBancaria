@@ -7,7 +7,7 @@ usar el archivo **funciones.py** para ir poniendo alli todas ytener limpio **ban
 A final de cada dia nos reunimos todos, hacemos pruebas y añadimos al main
 
 ## Gestion de usuario
-  * Crear nuevo usuario
-  * Inicio de sesion
-  * Validacion
-  * Evitar perfiles duplicados
+  * Crear nuevo usuario : Permite registrarse un nuevo usuario añadiéndolo a la lista.
+  * Inicio de sesión : El usuario introduce sus credenciales y si coincide con algún valor de la lista accede a la aplicación. Si no, da error.
+  * Validación : Validar si el nombre de usuario es un string y el pin un número entero.
+  * Evitar perfiles duplicados : Verificar que el nuevo usuario registrado no coincide con ningún valor de la lista.
