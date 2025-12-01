@@ -11,3 +11,9 @@ A final de cada dia nos reunimos todos, hacemos pruebas y añadimos al main
   * Inicio de sesión : El usuario introduce sus credenciales y si coincide con algún valor de la lista accede a la aplicación. Si no, da error.
   * Validación : Validar si el nombre de usuario es un string y el pin un número entero.
   * Evitar perfiles duplicados : Verificar que el nuevo usuario registrado no coincide con ningún valor de la lista.
+
+## Operaciones bancarias
+ * Consultar saldo : Permite mostrar el saldo que tiene el usuario.
+ * Ingresar saldo : Incrementa el saldo del usuario según lo que ingrese.
+ * Retirar dinero : Decrementa el saldo del usuario según lo que retire.
+ * Transferir dinero entre usuarios : Resta la cantidad transferida al usuario que la realiza y se la suma al usuario de destino.
