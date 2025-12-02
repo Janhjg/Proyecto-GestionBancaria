@@ -6,11 +6,16 @@ usar el archivo **funciones.py** para ir poniendo alli todas ytener limpio **ban
 ## Trabajar solo en dev u otras ramas nuevas
 A final de cada dia nos reunimos todos, hacemos pruebas y añadimos al main
 
-## Gestion de usuario
+## Gestión de usuario
   * Crear nuevo usuario : Permite registrarse un nuevo usuario añadiéndolo a un archivo JSON que se usará para almacenar los datos de los usuarios.
   * Inicio de sesión : El usuario introduce sus credenciales y si coincide con algún valor de la lista accede a la aplicación. Si no, da error.
   * Validación : Validar si el nombre de usuario es un string y el pin un número entero.
   * Evitar perfiles duplicados : Verificar que el nuevo usuario registrado no coincide con ningún valor de la lista.
+### campos que va a tener usuario
+  * ID cuenta
+  * nombre de usuario
+  * PIN
+  * saldo
 
 ## Operaciones bancarias
  * Consultar saldo : Permite mostrar el saldo que tiene el usuario.
