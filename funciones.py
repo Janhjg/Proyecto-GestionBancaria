@@ -11,26 +11,24 @@ def guardar_usuarios(usuarios):
 def crear_usuario(usuarios):
     print("CREAR NUEVO USUARIO")
     
-    nuevo = input("Nuevo nombre de usuario: ")
+    while True:
+        nuevo = input("Nuevo nombre de usuario: ").strip()
+        if not nuevo:
+            print("Error: el nombre no puede estar vacío.")
+            continue
+        if nuevo in usuarios:
+            print("Error: ese usuario ya existe. Intenta con otro nombre.")
+            continue
+        
+        pin = input("PIN (4 dígitos): ").strip()
+        if len(pin) != 4:
+            print("Error: el PIN debe tener exactamente 4 dígitos.")
+            continue
 
-    if nuevo in usuarios:
-        print("Ese usuario ya existe")
-        return
-
-    pin = input("PIN (4 dígitos): ")
-
-    if len(pin) != 4:
-        print("El PIN debe tener exactamente 4 caracteres.")
-        return
-
-    usuarios[nuevo] = {
-        "pin": pin,
-        "saldo": 0
-    }
-
-    guardar_usuarios(usuarios)
-
-    print(f"Usuario {nuevo} creado exitosamente.")
+        usuarios[nuevo] = {"pin": pin, "saldo": 0}
+        guardar_usuarios(usuarios)
+        print(f"Usuario '{nuevo}' creado exitosamente.")
+        break
 
 usuarios = cargar_usuarios()
 crear_usuario(usuarios)
