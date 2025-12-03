@@ -1,24 +1,39 @@
-#DEFINICIONES PARA LA GESTION DEL USUARIO
+import json
 
-def crear_usuario():
-    pass
+def cargar_usuarios():
+    with open("usuarios.json", "r") as archivo:
+        return json.load(archivo)
+
+def guardar_usuarios(usuarios):
+    with open("usuarios.json", "w") as archivo:
+        json.dump(usuarios, archivo, indent=4)
+
+def crear_usuario(usuarios):
+    print("CREAR NUEVO USUARIO")
     
-def login(usuarios):
-    print("INICIO DE SESIÓN")
-    usuario = input("Usuario:")
+    nuevo = input("Nuevo nombre de usuario: ")
 
-    if usuario not in usuarios:
-        print("Usuario no encontrado")
-        return None
+    if nuevo in usuarios:
+        print("Ese usuario ya existe")
+        return
 
-    pin = input("PIN: ")
+    pin = input("PIN (4 dígitos): ")
 
-    if pin != usuario[pin]:
-        print("PIN incorrecto")
-        return None
+    if len(pin) != 4:
+        print("El PIN debe tener exactamente 4 caracteres.")
+        return
 
-    print(f" Bienvenido {usuario}")
-    return usuario
+    usuarios[nuevo] = {
+        "pin": pin,
+        "saldo": 0
+    }
+
+    guardar_usuarios(usuarios)
+
+    print(f"Usuario {nuevo} creado exitosamente.")
+
+usuarios = cargar_usuarios()
+crear_usuario(usuarios)
 
 
 #Operaciones bancarias
