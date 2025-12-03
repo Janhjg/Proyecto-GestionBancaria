@@ -39,10 +39,14 @@ crear_usuario(usuarios)
 #Operaciones bancarias
 
 def consultar_saldo():
-    pass
+    saldo = 1000
+    print(f"Su saldo actual es: {saldo} euros.")
 
 def ingresar_dinero():
-    pass 
+    saldo = 1000
+    cantidad_ingreso = input("Teclee la cantidad a ingresar: ")
+    saldo = int(saldo) + int(cantidad_ingreso)
+    print(f"Has ingresado {cantidad_ingreso} euros. Su nuevo saldo es: {saldo} euros.") 
 
 def retirar_dinero():
     pass
