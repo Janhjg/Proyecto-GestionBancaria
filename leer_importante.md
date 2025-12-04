@@ -3,11 +3,11 @@
 # 1. Gestión de usuario
  
  ## 1.1 Crear nuevo usuario
-  * Crear nuevo usuario : Permite registrarse un nuevo usuario añadiéndolo a un archivo JSON que se usará para almacenar los datos de los usuarios.
+  Descripción: Permite registrarse un nuevo usuario añadiéndolo a un archivo JSON que se usará para almacenar los datos de los usuarios.
 
     
 ### campos que va a tener usuario
-  * ID cuenta
+  * IBAN
   * nombre de usuario
   * PIN
   * saldo
