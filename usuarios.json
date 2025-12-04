@@ -1,6 +1,5 @@
 {
-    "janh": {
-        "pin": "1234",
-        "saldo": 0
-    }
+    "usuario": "",
+    "pin": "",
+    "cuentas": {}
 }
