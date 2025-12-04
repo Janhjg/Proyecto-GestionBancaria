@@ -4,9 +4,7 @@
  
  ## 1.1 Crear nuevo usuario
   * Crear nuevo usuario : Permite registrarse un nuevo usuario añadiéndolo a un archivo JSON que se usará para almacenar los datos de los usuarios.
-  * Inicio de sesión : El usuario introduce sus credenciales y si coincide con algún valor de la lista accede a la aplicación. Si no, da error.
-  * Validación : Validar si el nombre de usuario es un string y el pin un número entero.
-  * Evitar perfiles duplicados : Verificar que el nuevo usuario registrado no coincide con ningún valor de la lista.
+
     
 ### campos que va a tener usuario
   * ID cuenta
