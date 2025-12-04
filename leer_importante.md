@@ -103,9 +103,9 @@ Manejar intentos fallidos (si queréis poner un máximo, opcional).
 
  ### * Iniciar sesión
 
- ### *Crear nuevo usuario
+ ### * Crear nuevo usuario
 
- ### *Salir
+ ### * Salir
 
 
 ## 3.2 Menú usuario
@@ -114,8 +114,8 @@ Y permite las siguientes opciones:
 
  ### * Consultar saldo
 
- ### *Ingresar dinero
+ ### * Ingresar dinero
 
- ### *Retirar dinero
+ ### * Retirar dinero
 
- ### *Transferencia a otra cuenta
+ ### * Transferencia a otra cuenta
