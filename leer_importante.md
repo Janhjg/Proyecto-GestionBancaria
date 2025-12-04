@@ -81,11 +81,11 @@ Manejar intentos fallidos (si queréis poner un máximo, opcional).
  ## 2.4 Transferencia a otra cuenta
 
  Descripción:
- Resta cantidad del usuario origen y la suma al usuario destino.
+ Resta cantidad de la cuenta origen y la suma a la cuenta destino.
 
  Validaciones:
 
- Usuario destino existe.
+ Cuenta destino existe.
 
  Cantidad positiva.
 
@@ -93,7 +93,7 @@ Manejar intentos fallidos (si queréis poner un máximo, opcional).
 
  Actualizar saldos de ambos usuarios en JSON.
 
- Evitar transferencias a uno mismo.
+ Evitar transferencias entre una misma cuenta.
 
 # 3. Menú
 
