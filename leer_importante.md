@@ -12,7 +12,7 @@
   * PIN
   * saldo
 
-## Validaciones necesarias:
+ Validaciones necesarias:
 
  Validar que el nombre de usuario es un string no vacío.
 
@@ -29,7 +29,7 @@
 Descripción:
 El usuario introduce nombre de usuario y PIN y, si coinciden con un usuario del archivo JSON, accede a la aplicación.
 
-Validaciones:
+Validaciones necesarias:
 
 Comprobar que el nombre existe.
 
@@ -44,7 +44,7 @@ Manejar intentos fallidos (si queréis poner un máximo, opcional).
  Descripción:
  Muestra el saldo actual del usuario logueado.
 
- Validaciones:
+ Validaciones necesarias:
 
  Comprobar que el usuario está logueado.
 
@@ -55,7 +55,7 @@ Manejar intentos fallidos (si queréis poner un máximo, opcional).
  Descripción:
  Incrementa el saldo actual del usuario.
 
- Validaciones:
+ Validaciones necesarias:
 
  Comprobar que la cantidad a ingresar es un número positivo.
 
@@ -67,7 +67,7 @@ Manejar intentos fallidos (si queréis poner un máximo, opcional).
  Descripción:
  Resta la cantidad del saldo del usuario.
 
- Validaciones:
+ Validaciones necesarias:
 
  Cantidad válida y positiva.
 
@@ -81,7 +81,7 @@ Manejar intentos fallidos (si queréis poner un máximo, opcional).
  Descripción:
  Resta cantidad de la cuenta origen y la suma a la cuenta destino.
 
- Validaciones:
+ Validaciones necesarias:
 
  Cuenta destino existe.
 
