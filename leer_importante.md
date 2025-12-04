@@ -78,7 +78,7 @@ Manejar intentos fallidos (si queréis poner un máximo, opcional).
  Actualizar el JSON.
 
 
- ## 2.4 Transferir entre usuarios
+ ## 2.4 Transferencia a otra cuenta
 
  Descripción:
  Resta cantidad del usuario origen y la suma al usuario destino.
