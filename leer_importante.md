@@ -37,6 +37,14 @@ Comprobar que el PIN coincide con el usuario.
 
 Manejar intentos fallidos (si queréis poner un máximo, opcional).
 
+## 1.3 Salir
+
+ Descripción: Permite salir de la aplicación.
+
+ Validación:
+
+ Comprobar que los procesos de la aplicación terminan correctamente.
+
 # 2. Operaciones bancarias
 
  ## 2.1 Consultar saldo
@@ -92,6 +100,15 @@ Manejar intentos fallidos (si queréis poner un máximo, opcional).
  Actualizar saldos de ambos usuarios en JSON.
 
  Evitar transferencias entre una misma cuenta.
+
+ ## 2.5 Salir
+
+ Descripción: Permite regresar al menú de inicio de sesión.
+ 
+ Validación:
+
+ Comprobar que te devuelve correctamente al menú de inicio de sesión.
+
 
 # 3. Menú
 
