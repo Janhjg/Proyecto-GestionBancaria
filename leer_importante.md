@@ -1,6 +1,6 @@
 # Inicio
-El proyecto consiste en una aplicación bancaria que se ejecuta en la terminal con persistencia de datos. El desarrollo se ha dividido en dos grandes bloques:
-La gestión de los usuarios y las operaciones a realizar.
+El proyecto consiste en una aplicación bancaria que se ejecuta en la terminal con persistencia de datos. El desarrollo se ha dividido en tres grandes bloques:
+La gestión de los usuarios, las operaciones a realizar y los menú para interactuar con el usuario.
 
 
 # 1. Gestión de usuario
