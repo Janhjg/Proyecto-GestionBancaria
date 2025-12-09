@@ -89,8 +89,8 @@ crear_cuenta(datos)
 
 #Operaciones bancarias
 
-def consultar_saldo():
-    saldo = 1000
+def consultar_saldo(n):
+    saldo = n
     print(f"Su saldo actual es: {saldo} euros.")
 
 def ingresar_dinero(n):
