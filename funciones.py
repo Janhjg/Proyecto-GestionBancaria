@@ -86,6 +86,49 @@ datos = cargar_datos()
 crear_usuario(datos)
 crear_cuenta(datos)
 
+# -----------------------------------
+# Inicio de sesión
+# -----------------------------------
+
+def cargar_usuarios(ruta_archivo="./usuarios.json"):
+    """Carga la lista de usuarios desde un archivo JSON."""
+    try:
+        with open(ruta_archivo, "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print("Error: No se encontró el archivo usuarios.json")
+        return []
+    except json.JSONDecodeError:
+        print("Error: El archivo usuarios.json tiene un formato incorrecto.")
+        return []
+
+
+def autenticar_usuario(usuarios):
+    """Valida usuario y PIN con máximo 3 intentos."""
+    intentos = 3
+
+    while intentos > 0:
+        usuario_input = input("Introduce tu nombre de usuario: ").strip()
+        pin_input = input("Introduce tu PIN: ").strip()
+
+        # Buscar usuario en la lista
+        usuario_encontrado = next((u for u in usuarios if u["usuario"] == usuario_input), None)
+
+        if usuario_encontrado is None:
+            print("El usuario no existe.")
+        else:
+            if usuario_encontrado["pin"] == pin_input:
+                print("Acceso concedido. Bienvenido,", usuario_input)
+                return True
+            else:
+                print("PIN incorrecto.")
+
+        intentos -= 1
+        print(f"Intentos restantes: {intentos}")
+
+    print("Demasiados intentos fallidos. Acceso bloqueado.")
+    return False
+
 
 #Operaciones bancarias
 
