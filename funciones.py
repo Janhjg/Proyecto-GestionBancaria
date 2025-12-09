@@ -93,14 +93,14 @@ def consultar_saldo():
     saldo = 1000
     print(f"Su saldo actual es: {saldo} euros.")
 
-def ingresar_dinero():
-    saldo = 1000
+def ingresar_dinero(n):
+    saldo = saldo + n
     cantidad_ingreso = int(input("Teclee la cantidad a ingresar: "))
     saldo = int(saldo) + int(cantidad_ingreso)
     print(f"Has ingresado {cantidad_ingreso} euros. Su nuevo saldo es: {saldo} euros.") 
 
-def retirar_dinero():
-    saldo = 1000
+def retirar_dinero(n):
+    saldo = saldo - n
     cantidad_retiro = input("Teclee la cantidad a retirar: ")
     if cantidad_retiro > saldo:
          print("Fondos insuficientes")
