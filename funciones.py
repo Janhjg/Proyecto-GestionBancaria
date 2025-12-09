@@ -44,12 +44,18 @@ def consultar_saldo():
 
 def ingresar_dinero():
     saldo = 1000
-    cantidad_ingreso = input("Teclee la cantidad a ingresar: ")
+    cantidad_ingreso = int(input("Teclee la cantidad a ingresar: "))
     saldo = int(saldo) + int(cantidad_ingreso)
     print(f"Has ingresado {cantidad_ingreso} euros. Su nuevo saldo es: {saldo} euros.") 
 
 def retirar_dinero():
-    pass
+    saldo = 1000
+    cantidad_retiro = input("Teclee la cantidad a retirar: ")
+    if cantidad_retiro > saldo:
+         print("Fondos insuficientes")
+    else:
+        saldo = saldo - cantidad_retiro
+        print(f"Ha retirado {cantidad_retiro}, su saldo actual es de {saldo}")
 
 def transferir():
     pass
