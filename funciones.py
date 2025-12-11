@@ -89,24 +89,25 @@ crear_cuenta(datos)
 
 #Operaciones bancarias
 
-def consultar_saldo(n):
-    saldo = n
+def consultar_saldo(saldo):
     print(f"Su saldo actual es: {saldo} euros.")
+    return saldo
 
-def ingresar_dinero(n):
-    saldo = saldo + n
-    cantidad_ingreso = int(input("Teclee la cantidad a ingresar: "))
-    saldo = int(saldo) + int(cantidad_ingreso)
-    print(f"Has ingresado {cantidad_ingreso} euros. Su nuevo saldo es: {saldo} euros.") 
+def ingresar_dinero(saldo):
+    cantidad = int(input("Teclee la cantidad a ingresar: "))
+    saldo = saldo + cantidad
+    print(f"Has ingresado {cantidad} euros. Su nuevo saldo es: {saldo} euros.")
+    return saldo
 
-def retirar_dinero(n):
-    saldo = saldo - n
-    cantidad_retiro = input("Teclee la cantidad a retirar: ")
-    if cantidad_retiro > saldo:
-         print("Fondos insuficientes")
+def retirar_dinero(saldo):
+    cantidad = int(input("Teclee la cantidad a retirar: "))
+    if cantidad > saldo:
+        print("Fondos insuficientes")
     else:
-        saldo = saldo - cantidad_retiro
-        print(f"Ha retirado {cantidad_retiro}, su saldo actual es de {saldo}")
+        saldo -= cantidad
+        print(f"Ha retirado {cantidad}, su saldo actual es: {saldo} euros.")
+    return saldo
+
 
 def transferir():
     pass
