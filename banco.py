@@ -14,10 +14,10 @@ if __name__ == "__main__":
         if opcion == "1":
             funciones.crear_usuario() # insertar función de crear usuario
         elif opcion == "2":
-            user = ()  # insertar función de login
+            user = funciones.autenticar_usuario()
             if user:
-                print(f"\nBienvenido, {user['nombre']}!")
-                return user    # Devuelves el usuario para pasar al menú principal de operaciones
+                print(f"\nBienvenido, {user['usuario']}!")
+                    # Devuelves el usuario para pasar al menú principal de operaciones
         elif opcion == "3":
             print("Saliendo de la aplicación...")
             exit()
