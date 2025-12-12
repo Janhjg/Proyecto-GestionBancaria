@@ -103,22 +103,36 @@ def cargar_usuarios(ruta_archivo="./usuarios.json"):
         return []
 
 
-def autenticar_usuario(usuarios):
-    """Valida usuario y PIN con máximo 3 intentos."""
+def autenticar_usuario():
+    """Valida usuario y PIN leyendo el archivo usuarios.json con máximo 3 intentos."""
     intentos = 3
+
+    # Cargar usuarios desde el archivo JSON
+    try:
+        with open("usuarios.json", "r", encoding="utf-8") as f:
+            usuarios = json.load(f)
+    except FileNotFoundError:
+        print("Error: El archivo usuarios.json no existe.")
+        return False
+    except json.JSONDecodeError:
+        print("Error: El archivo usuarios.json no tiene un formato válido.")
+        return False
 
     while intentos > 0:
         usuario_input = input("Introduce tu nombre de usuario: ").strip()
         pin_input = input("Introduce tu PIN: ").strip()
 
-        # Buscar usuario en la lista
-        usuario_encontrado = next((u for u in usuarios if u["usuario"] == usuario_input), None)
+        # Buscar usuario en el JSON
+        usuario_encontrado = next(
+            (u for u in usuarios if u.get("usuario") == usuario_input),
+            None
+        )
 
         if usuario_encontrado is None:
             print("El usuario no existe.")
         else:
-            if usuario_encontrado["pin"] == pin_input:
-                print("Acceso concedido. Bienvenido,", usuario_input)
+            if usuario_encontrado.get("pin") == pin_input:
+                print(f"Acceso concedido. Bienvenido, {usuario_input}")
                 return True
             else:
                 print("PIN incorrecto.")
