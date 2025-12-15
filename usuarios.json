@@ -8,7 +8,7 @@
             },
             "543": {
                 "tipo": "corriente",
-                "saldo": 149
+                "saldo": 0
             }
         }
     },
@@ -17,11 +17,11 @@
         "cuentas": {
             "321": {
                 "tipo": "corriente",
-                "saldo": 0
+                "saldo": 148
             },
             "345": {
                 "tipo": "corriente",
-                "saldo": 1
+                "saldo": 2
             }
         }
     }

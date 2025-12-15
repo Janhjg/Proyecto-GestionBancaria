@@ -46,7 +46,7 @@ def crear_usuario(datos):
     datos["pin"] = pin
     datos["cuentas"] = {}
 
-    guardar_datos(datos)
+    guardar_datos_globales(datos)
     print(f"Usuario '{usuario}' creado exitosamente.")
 
 
@@ -82,7 +82,7 @@ def crear_cuenta(datos):
         "saldo": 0
     }
 
-    guardar_datos(datos)
+    guardar_datos_globales(datos)
     print(f"Cuenta creada exitosamente con IBAN: {iban}")
 
 
@@ -118,15 +118,20 @@ def retirar_dinero():
 
 def transferir(usuario):
 #Retornará false si el usuario ha cancelado la operacion
-    datos=cargar_datos()
-    
+    datos=cargar_datos_globales()
     UsuarioSesionActual=usuario
+
+    #ORIGEN
     datosUsuario=datos[UsuarioSesionActual]
-    cuentasUsuarioOrigen=dict(datos[UsuarioSesionActual]["cuentas"])
+    cuentasUsuarioOrigen=dict(datosUsuario["cuentas"])
     cuentaOrigen=""#IBAN ORIGEN
+    
     importe_a_transferir=0
-    cuentaDestino=""#IBAN DESTINO
+    
+    #DESTINO
     UsuarioDestino=""
+    cuentaDestino=""#IBAN DESTINO
+    
     
     if(not datosUsuario['cuentas']):#verificar que tenga alguna cuenta
         print("Usted no dispone de cuenta alguna")
@@ -154,7 +159,7 @@ def transferir(usuario):
     while(True):
         importe_a_transferir=input("introduzca el importe que desea transferir (q para cancelar): ")
         if importe_a_transferir.lower()=="q":return False #Salida de metodo
-        if(validarCifra(importe_a_transferir, datosUsuario["cuentas"][cuentaOrigen])):
+        if(validarCifra(importe_a_transferir, cuentasUsuarioOrigen[cuentaOrigen])):
             importe_a_transferir=int(importe_a_transferir)
             break
             
@@ -185,13 +190,12 @@ def transferir(usuario):
     print("Realizando transferencia....")
     time.sleep(3)
 
-    datosUsuario["cuentas"][cuentaOrigen]["saldo"]-=importe_a_transferir
+    cuentasUsuarioOrigen[cuentaOrigen]["saldo"]-=importe_a_transferir
     datos[UsuarioDestino]["cuentas"][cuentaDestino]["saldo"]+=importe_a_transferir
     print("Transferencia realizada, si desea ver su saldo restante consultelo con la operacion consultar saldo.")
-    guardar_datos(datos)
+    guardar_datos_globales(datos)
     
         
 
 if __name__=="__main__":
-    transferir("ruben")
-    # print(prueba.values().mapping.)
+    pass
