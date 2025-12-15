@@ -99,14 +99,14 @@ def validarCifra(cifra, datos):#Validará tanto si se ha introducido un numero y
     try:
         if datos["saldo"] >= int(cifra) > 0:
             return True
-        elif int(cifra)<0:
-            print("valor incorrecto para la cifra")
+        elif int(cifra)<=0:
+            print("ERROR: Valor incorrecto para la cifra")
             return False
         else:
-            print("Usted no dispone de saldo suficiente, por favor consulte su saldo")
+            print("ERROR: Usted no dispone de saldo suficiente, por favor consulte su saldo")
             return False
     except: #en caso de que no sea un numero
-        print("valor incorrecto para la cifra")
+        print("ERROR: Valor incorrecto para la cifra")
         return False
 
 def retirar_dinero():
@@ -142,7 +142,7 @@ def transferir(usuario):
         cuentaOrigen=input("seleccione desde que cuenta quiere transferir (q para cancelar): ")
         if cuentaOrigen.lower()=="q":return False#Salida de metodo
         if cuentaOrigen in cuentasDeUsuario:break
-        print("ERROR:La cuenta introducida no coincide con ninguna de tus cuentas.")
+        print("ERROR: La cuenta introducida no coincide con ninguna de tus cuentas.")
     
 
     #OBTENIENDO IMPORTA A TRANSFERIR
@@ -167,7 +167,7 @@ def transferir(usuario):
                 break
         if(cuentaDestino):
             break
-        print("ERROR:la cuenta introducida no coincide con ninguna de las cuentas registradas")
+        print("ERROR: La cuenta introducida no coincide con ninguna de las cuentas registradas")
 
     #MOSTRANDO Y CONFIRMANDO DATOS DE OPERACION
     print(f"usted va a realizar una transferencia de {importe_a_transferir}€ desde su cuenta {cuentaOrigen} a la cuenta destino {cuentaDestino} del usuario {UsuarioDestino}")
@@ -175,7 +175,7 @@ def transferir(usuario):
         confirmacion=input("¿DESEA CONFIRMAR ESTA OPERACION?, confirmar/denegar: ").lower().strip()
         if confirmacion=="confirmar":break
         if confirmacion=="denegar":return False#Salida de metodo
-        print("ERROR:Introduzca confirmar o denegar")
+        print("ERROR: Introduzca confirmar o denegar")
     
     print("Realizando transferencia....")
     time.sleep(3)
