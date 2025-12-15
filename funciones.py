@@ -5,20 +5,24 @@ import time
 # -----------------------------------
 # Cargar / Guardar datos
 # -----------------------------------
-def cargar_datos():
+def cargar_datos_globales():
+    """Carga el diccionario global de todos los usuarios desde 'usuarios.json'."""
     try:
         with open("usuarios.json", "r") as archivo:
             return json.load(archivo)
     except FileNotFoundError:
-        return {
-            "usuario": "",
-            "pin": "",
-            "cuentas": {}
-        }
+        return {} 
+    except json.JSONDecodeError:
+        print("Advertencia: El archivo usuarios.json no tiene formato válido. Iniciando con datos vacíos.")
+        return {}
 
-def guardar_datos(datos):
-    with open("usuarios.json", "w") as archivo:
-        json.dump(datos, archivo, indent=4)
+def guardar_datos_globales(datos):
+    """Guarda el diccionario global de todos los usuarios en 'usuarios.json'."""
+    try:
+        with open("usuarios.json", "w") as archivo:
+            json.dump(datos, archivo, indent=4)
+    except Exception as e:
+        print(f"Error al guardar los datos: {e}")
 
 
 # -----------------------------------
@@ -118,30 +122,31 @@ def transferir(usuario):
     
     UsuarioSesionActual=usuario
     datosUsuario=datos[UsuarioSesionActual]
+    cuentasUsuarioOrigen=dict(datos[UsuarioSesionActual]["cuentas"])
     cuentaOrigen=""#IBAN ORIGEN
     importe_a_transferir=0
     cuentaDestino=""#IBAN DESTINO
     UsuarioDestino=""
     
-    if(not datosUsuario["cuentas"]):#verificar que tenga alguna cuenta
+    if(not datosUsuario['cuentas']):#verificar que tenga alguna cuenta
         print("Usted no dispone de cuenta alguna")
         return False
     
     #MOSTRANDO CUENTAS DE ORIGEN
-    #muestra el saldo de cada uno
-    cuentasDeUsuario=list(dict(datosUsuario["cuentas"]).keys())
+    keysCuentasDeUsuario=cuentasUsuarioOrigen.keys()
     print("de las siguientes cuentas:\n")
     #[print(f"{cuenta},\n") for cuenta in list(cuentasDeUsuario.keys]
-    for cuenta in cuentasDeUsuario:
+    for cuenta in keysCuentasDeUsuario:
+        
         print("||---||")
-        print(f"||{cuenta}||")
+        print(f"||{cuenta}|| SALDO: {cuentasUsuarioOrigen[str(cuenta)]['saldo']}€")
         print("||---||\n")
 
     #SELECCION CUENTA ORIGEN
     while(True):
         cuentaOrigen=input("seleccione desde que cuenta quiere transferir (q para cancelar): ")
         if cuentaOrigen.lower()=="q":return False#Salida de metodo
-        if cuentaOrigen in cuentasDeUsuario:break
+        if cuentaOrigen in keysCuentasDeUsuario:break
         print("ERROR: La cuenta introducida no coincide con ninguna de tus cuentas.")
     
 
