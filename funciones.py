@@ -194,6 +194,7 @@ def transferir(usuario):
     datos[UsuarioDestino]["cuentas"][cuentaDestino]["saldo"]+=importe_a_transferir
     print("Transferencia realizada, si desea ver su saldo restante consultelo con la operacion consultar saldo.")
     guardar_datos_globales(datos)
+    return True
     
         
 
