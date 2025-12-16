@@ -234,4 +234,4 @@ def transferir():
     pass
 
 if __name__=="__main__":
-    retirar_dinero("ruben")
+    pass
