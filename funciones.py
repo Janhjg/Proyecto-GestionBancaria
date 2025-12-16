@@ -1,90 +1,104 @@
 import json
 import random
 
-# -----------------------------------
-# Cargar / Guardar datos
-# -----------------------------------
-def cargar_datos():
+# 1. GESTIÓN DE DATOS - usuarios.json
+
+def cargar_datos_globales():
+    """Carga el diccionario global de todos los usuarios desde 'usuarios.json'."""
     try:
         with open("usuarios.json", "r") as archivo:
             return json.load(archivo)
     except FileNotFoundError:
-        return {
-            "usuario": "",
-            "pin": "",
-            "cuentas": {}
-        }
+        return {} 
+    except json.JSONDecodeError:
+        print("Advertencia: El archivo usuarios.json no tiene formato válido. Iniciando con datos vacíos.")
+        return {}
 
-def guardar_datos(datos):
-    with open("usuarios.json", "w") as archivo:
-        json.dump(datos, archivo, indent=4)
+def guardar_datos_globales(datos):
+    """Guarda el diccionario global de todos los usuarios en 'usuarios.json'."""
+    try:
+        with open("usuarios.json", "w") as archivo:
+            json.dump(datos, archivo, indent=4)
+    except Exception as e:
+        print(f"Error al guardar los datos: {e}")
 
+# 2 FUNCIONES DE AUTENTICACIÓN Y REGISTRO
 
-# -----------------------------------
-# Crear usuario principal
-# -----------------------------------
-def crear_usuario(datos):
-    print("=== CREAR USUARIO PRINCIPAL ===")
+def crear_usuario(datos_globales):
+    """Permite crear un nuevo usuario, lo añade y retorna su nombre y datos."""
+    print("REGISTRO DE NUEVO USUARIO")
     
-    if datos["usuario"]:
-        print(f"Ya existe un usuario registrado: {datos['usuario']}")
-        return
+    while True:
+        usuario = input("Nombre de usuario (único): ").strip()
+        if usuario in datos_globales:
+            print(f"Error: El usuario '{usuario}' ya existe. Intente con otro.")
+        elif not usuario:
+            print("El nombre de usuario no puede estar vacío.")
+        else:
+            break
 
-    usuario = input("Nombre de usuario: ").strip()
-    pin = input("PIN (4 dígitos): ").strip()
+    while True:
+        pin = input("PIN (4 dígitos): ").strip()
+        if len(pin) == 4 and pin.isdigit():
+            break
+        else:
+            print("Error: el PIN debe tener 4 números.")
+            
+    # Crea la estructura del nuevo usuario (formato que tendra en el json)
+    datos_usuario = {
+        "pin": pin,
+        "cuentas": {}
+    }
+    datos_globales[usuario] = datos_usuario
 
-    if len(pin) != 4 or not pin.isdigit():
-        print("Error: el PIN debe tener 4 números.")
-        return
+    guardar_datos_globales(datos_globales)
+    print(f"\nUsuario '{usuario}' creado exitosamente.")
+    
+    # Retorna el nombre y los datos para poder usarlo en crear_cuenta
+    return usuario, datos_usuario
 
-    datos["usuario"] = usuario
-    datos["pin"] = pin
-    datos["cuentas"] = {}
+# 3 FUNCIONES DE GESTIÓN DE CUENTAS
 
-    guardar_datos(datos)
-    print(f"Usuario '{usuario}' creado exitosamente.")
-
-
-# -----------------------------------
-# Generar IBAN único de 3 dígitos
-# -----------------------------------
-def generar_iban(datos):
+def generar_iban(datos_globales):
+    """Genera un IBAN de 3 dígitos único a través de TODOS los usuarios."""
+    ibans_existentes = set()
+    
+    # Recorremos todas las cuentas de todos los usuarios para asegurar unicidad global
+    for user_data in datos_globales.values():
+        ibans_existentes.update(user_data["cuentas"].keys())
+        
     while True:
         iban = str(random.randint(100, 999))
-        if iban not in datos["cuentas"]:
+        if iban not in ibans_existentes:
             return iban
 
+def crear_cuenta(datos_globales, datos_usuario):
+    """Crea una cuenta para el usuario proporcionado."""
+    print("\nCREAR NUEVA CUENTA")
 
-# -----------------------------------
-# Crear nueva cuenta bancaria
-# -----------------------------------
-def crear_cuenta(datos):
-    print("=== CREAR NUEVA CUENTA ===")
-
-    if not datos["usuario"]:
-        print("Primero debes crear el usuario principal.")
+    # Aseguramos que haya un usuario válido antes de continuar
+    if datos_usuario is None:
+        print("Error: Se requiere un objeto de usuario válido para crear una cuenta.")
         return
 
-    tipo = input("Tipo de cuenta (ahorros / corriente): ").strip()
+    tipo = input("Tipo de cuenta (ahorros / corriente): ").strip().lower()
     if tipo not in ["ahorros", "corriente"]:
         print("Tipo de cuenta no válido.")
         return
 
-    iban = generar_iban(datos)
+    # El IBAN se genera a nivel global
+    iban = generar_iban(datos_globales) 
 
-    datos["cuentas"][iban] = {
+    # Agrega la cuenta al diccionario de cuentas del usuario actual
+    datos_usuario["cuentas"][iban] = {
         "tipo": tipo,
-        "saldo": 0
+        "saldo": 0.00
     }
 
-    guardar_datos(datos)
-    print(f"Cuenta creada exitosamente con IBAN: {iban}")
+    # Guardar la estructura global para que el cambio persista en usuarios.json
+    guardar_datos_globales(datos_globales)
+    print(f"\nCuenta de tipo '{tipo}' creada exitosamente con IBAN: {iban}")
 
-
-datos = cargar_datos()
-
-crear_usuario(datos)
-crear_cuenta(datos)
 
 # -----------------------------------
 # Inicio de sesión
@@ -132,8 +146,8 @@ def autenticar_usuario():
             print("El usuario no existe.")
         else:
             if usuario_encontrado.get("pin") == pin_input:
-                print(f"Acceso concedido. Bienvenido, {usuario_input}")
-                return True
+                print(f"Acceso concedido.")
+                return usuario_encontrado
             else:
                 print("PIN incorrecto.")
 

@@ -1,6 +1,7 @@
 import funciones
+import os
 
-
+print("Ejecutando archivo:", os.path.abspath(__file__))
 if __name__ == "__main__":
  
  while True:
@@ -11,14 +12,14 @@ if __name__ == "__main__":
         
         opcion = input("Selecciona una opción: ")
 
-        if opcion == 1:
-            funciones.crear_usuario() # insertar función de crear usuario
-        elif opcion == 2:
+        if opcion == "1":
+            # llamada a funciones de Jahn
+        elif opcion == "2":
             user = funciones.autenticar_usuario()
             if user:
                 print(f"\nBienvenido, {user['usuario']}!")
                     # Devuelves el usuario para pasar al menú principal de operaciones
-        elif opcion == 3:
+        elif opcion == "3":
             print("Saliendo de la aplicación...")
             exit()
         else:
