@@ -1,5 +1,28 @@
 {
-    "usuario": "Juan",
-    "pin": "1234",
-    "cuentas": {}
+    "ruben": {
+        "pin": "1234",
+        "cuentas": {
+            "123": {
+                "tipo": "corriente",
+                "saldo": 0
+            },
+            "543": {
+                "tipo": "corriente",
+                "saldo": 0
+            }
+        }
+    },
+    "alvaro": {
+        "pin": "1234",
+        "cuentas": {
+            "321": {
+                "tipo": "corriente",
+                "saldo": 148
+            },
+            "345": {
+                "tipo": "corriente",
+                "saldo": 2
+            }
+        }
+    }
 }

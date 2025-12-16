@@ -182,8 +182,8 @@ def validarCifra(cifra, datos):#Validará tanto si se ha introducido un numero y
         print("ERROR: Valor incorrecto para la cifra")
         return False
     
-def retirar_dinero(usuario, datos):
-   # datos=cargar_datos_globales()
+def retirar_dinero(usuario):
+    datos=cargar_datos_globales()
     datosUsuario=datos[usuario]
     cuentasUsuario=datosUsuario["cuentas"]
 
@@ -227,41 +227,11 @@ def retirar_dinero(usuario, datos):
     print("Realizando retirada....")
     time.sleep(3)
     datosUsuario["cuentas"][cuentaSeleccionada]["saldo"]-=importe_a_sacar
-    #guardar_datos_globales(datos)
-    print(datos)
+    guardar_datos_globales(datos)
     return True
 
 def transferir():
     pass
 
 if __name__=="__main__":
-    datos={
-    "ruben": {
-        "pin": "1234",
-        "cuentas": {
-            "123": {
-                "tipo": "corriente",
-                "saldo": 0
-            },
-            "543": {
-                "tipo": "corriente",
-                "saldo": 0
-            }
-        }
-    },
-    "alvaro": {
-        "pin": "1234",
-        "cuentas": {
-            "321": {
-                "tipo": "corriente",
-                "saldo": 148
-            },
-            "345": {
-                "tipo": "corriente",
-                "saldo": 2
-            }
-        }
-    }
-}
-    
-    retirar_dinero("alvaro",datos)
+    retirar_dinero("ruben")
