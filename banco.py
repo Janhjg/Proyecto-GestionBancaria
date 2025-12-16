@@ -14,6 +14,7 @@ if __name__ == "__main__":
 
         if opcion == "1":
             # llamada a funciones de Jahn
+            pass
         elif opcion == "2":
             user = funciones.autenticar_usuario()
             if user:
