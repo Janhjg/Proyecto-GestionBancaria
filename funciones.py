@@ -296,52 +296,7 @@ def ingresar_dinero(usuario):
     return True
 
 def retirar_dinero(usuario):
-    datos=cargar_datos_globales()
-    datosUsuario=datos[usuario]
-    cuentasUsuario=datosUsuario["cuentas"]
-
-    if(not datosUsuario['cuentas']):#verificar que tenga alguna cuenta
-        print("Usted no dispone de cuenta alguna")
-        return False
-    
-    #MOSTRANDO CUENTAS DE USUARIO
-    keysCuentasDeUsuario=cuentasUsuario.keys()
-    print("de las siguientes cuentas:\n")
-    #[print(f"{cuenta},\n") for cuenta in list(cuentasDeUsuario.keys]
-    for cuenta in keysCuentasDeUsuario:
-        
-        print("||---||")
-        print(f"||{cuenta}|| SALDO: {cuentasUsuario[str(cuenta)]['saldo']}€")
-        print("||---||\n")
-
-    #SELECCION CUENTA
-    while(True):
-        cuentaSeleccionada=input("seleccione desde que cuenta quiere retirar (q para cancelar): ")
-        if cuentaSeleccionada.lower()=="q":return False#Salida de metodo
-        if cuentaSeleccionada in keysCuentasDeUsuario:break
-        print("ERROR: La cuenta introducida no coincide con ninguna de tus cuentas.")
-
-    #OBTENIENDO IMPORTA A SACAR
-    while(True):
-        importe_a_sacar=input(f"introduzca el importe que desea retirar de su cuenta {cuentaSeleccionada} (q para cancelar): ")
-        if importe_a_sacar.lower()=="q":return False #Salida de metodo
-        if(validarCifra(importe_a_sacar, cuentasUsuario[cuentaSeleccionada], True)):
-            importe_a_sacar=int(importe_a_sacar)
-            break
-    
-    #MOSTRANDO Y CONFIRMANDO DATOS DE OPERACION
-    print(f"usted va a realizar una retirada de {importe_a_sacar}€ desde su cuenta {cuentaSeleccionada}")
-    while(True):
-        confirmacion=input("¿DESEA CONFIRMAR ESTA OPERACION?, confirmar/denegar: ").lower().strip()
-        if confirmacion=="confirmar":break
-        if confirmacion=="denegar":return False#Salida de metodo
-        print("ERROR: Introduzca confirmar o denegar")
-    
-    print("Realizando retirada....")
-    time.sleep(3)
-    datosUsuario["cuentas"][cuentaSeleccionada]["saldo"]-=importe_a_sacar
-    guardar_datos_globales(datos)
-    return True
+    pass
 
 
 def transferir():
