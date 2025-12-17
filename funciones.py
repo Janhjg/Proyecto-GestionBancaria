@@ -157,8 +157,68 @@ def autenticar_usuario():
     print("Demasiados intentos fallidos. Acceso bloqueado.")
     return False
 
+# -----------------------------------
+# Menú OPERACIONES
+# -----------------------------------
+def menu_operaciones(usuario, datos):
+    while True:
+        print(f"\n=== MENÚ DE OPERACIONES ({usuario}) ===")
+        print("1. Consultar saldo")
+        print("2. Ingresar dinero")
+        print("3. Retirar dinero")
+        print("4. Transferir dinero")
+        print("5. Cerrar sesión")
 
-#Operaciones bancarias
+        opcion = input("Selecciona una opción: ")
+
+        if opcion == "1":
+            consultar_saldo(datos)
+
+        elif opcion == "2":
+            ingresar_dinero(datos)
+
+        elif opcion == "3":
+            retirar_dinero(datos)
+
+        elif opcion == "4":
+            transferir(usuario, datos)
+
+        elif opcion == "5":
+            print("Cerrando sesión...")
+            break
+
+        else:
+            print("Opción no válida.")
+
+
+# -----------------------------------
+# Selección de cuenta
+# -----------------------------------
+
+def seleccionar_cuenta(datos):
+    cuentas = datos["cuentas"]
+
+    if not cuentas:
+        print("No tienes cuentas.")
+        return None
+
+    print("\nCuentas disponibles:")
+    for num in cuentas:
+        print(f"- {num}")
+
+    cuenta = input("Selecciona una cuenta: ")
+
+    if cuenta not in cuentas:
+        print("Cuenta no válida.")
+        return None
+
+    return cuenta
+
+
+
+# -----------------------------------
+# Operaciones bancarias
+# -----------------------------------
 
 def consultar_saldo(saldo):
     print(f"Su saldo actual es: {saldo} euros.")

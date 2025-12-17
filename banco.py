@@ -28,6 +28,7 @@ if __name__ == "__main__":
             if login:
                 usuario, datos = login
                 print(f"\nBienvenido, {usuario}!")
+                funciones.menu_operaciones(usuario, datos)
         elif opcion == "3":
             print("Saliendo de la aplicación...")
             exit()
