@@ -166,27 +166,26 @@ def menu_operaciones(usuario, datos):
         print("4. Transferir dinero")
         print("5. Cerrar sesión")
         print("6. Crear cuenta")
-
+        datos_globales = cargar_datos_globales()
         opcion = input("Selecciona una opción: ")
 
         if opcion == "1":
-            consultar_saldo(usuario)
+            consultar_saldo(datos_globales[usuario])
 
         elif opcion == "2":
-            ingresar_dinero(usuario)
+            ingresar_dinero(datos_globales[usuario])
 
         elif opcion == "3":
-            retirar_dinero(usuario)
+            retirar_dinero(datos_globales[usuario])
 
         elif opcion == "4":
-            transferir(usuario, datos)
+            transferir(datos_globales[usuario], datos)
 
         elif opcion == "5":
             print("Cerrando sesión...")
             break
 
         elif opcion == "6":
-            datos_globales = cargar_datos_globales()
             crear_cuenta(datos_globales, usuario)
 
 
