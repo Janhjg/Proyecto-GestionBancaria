@@ -165,6 +165,20 @@ def consultar_saldo(saldo):
     print(f"Su saldo actual es: {saldo} euros.")
     return saldo
 
+def validarCifra(cifra, datos, boolValidarRetiro):#Validará tanto si se ha introducido un numero y coherente y si tiene saldo para operaciones de retiro 
+    try:
+        if datos["saldo"] >= int(cifra) > 0:
+            return True
+        elif datos["saldo"]<int(cifra and boolValidarRetiro):#si boolvalidarRetiro es false quiere decir que la operacion que lo ha llamado no necesita validar retiro porque no es para un retiro porloque skipeará este if
+            print("ERROR: Usted no dispone de saldo suficiente, por favor consulte su saldo")
+            return False
+        else:
+            print("ERROR: Valor incorrecto para la cifra")
+            return False
+    except: #en caso de que no sea un numero
+        print("ERROR: Valor incorrecto para la cifra")
+        return False
+
 def ingresar_dinero(usuario):
     datos=cargar_datos_globales()
     datosUsuario=datos[usuario]
@@ -212,20 +226,6 @@ def ingresar_dinero(usuario):
     datosUsuario["cuentas"][cuentaSeleccionada]["saldo"]+=importe_a_ingresar
     guardar_datos_globales(datos)
     return True
-
-def validarCifra(cifra, datos, boolValidarRetiro):#Validará tanto si se ha introducido un numero y coherente y si tiene saldo para operaciones de retiro 
-    try:
-        if datos["saldo"] >= int(cifra) > 0:
-            return True
-        elif datos["saldo"]<int(cifra and boolValidarRetiro):#si boolvalidarRetiro es false quiere decir que la operacion que lo ha llamado no necesita validar retiro porque no es para un retiro porloque skipeará este if
-            print("ERROR: Usted no dispone de saldo suficiente, por favor consulte su saldo")
-            return False
-        else:
-            print("ERROR: Valor incorrecto para la cifra")
-            return False
-    except: #en caso de que no sea un numero
-        print("ERROR: Valor incorrecto para la cifra")
-        return False
 
 def retirar_dinero(saldo):
     cantidad = int(input("Teclee la cantidad a retirar: "))
