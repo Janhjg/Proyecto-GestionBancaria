@@ -170,13 +170,13 @@ def menu_operaciones(usuario, datos):
         opcion = input("Selecciona una opción: ")
 
         if opcion == "1":
-            consultar_saldo(datos)
+            consultar_saldo(usuario)
 
         elif opcion == "2":
-            ingresar_dinero(datos)
+            ingresar_dinero(usuario)
 
         elif opcion == "3":
-            retirar_dinero(datos)
+            retirar_dinero(usuario)
 
         elif opcion == "4":
             transferir(usuario, datos)
