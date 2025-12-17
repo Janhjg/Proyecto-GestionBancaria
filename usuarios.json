@@ -1,28 +1,19 @@
 {
-    "ruben": {
+    "Manolo": {
         "pin": "1234",
         "cuentas": {
-            "123": {
-                "tipo": "corriente",
-                "saldo": 0
+            "233": {
+                "tipo": "ahorros",
+                "saldo": 0.0
             },
-            "543": {
+            "328": {
                 "tipo": "corriente",
-                "saldo": 15
+                "saldo": 0.0
             }
         }
     },
-    "alvaro": {
+    "manuel": {
         "pin": "1234",
-        "cuentas": {
-            "321": {
-                "tipo": "corriente",
-                "saldo": 148
-            },
-            "345": {
-                "tipo": "corriente",
-                "saldo": 2
-            }
-        }
+        "cuentas": {}
     }
 }
