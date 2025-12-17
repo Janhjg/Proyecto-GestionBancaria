@@ -170,6 +170,9 @@ def menu_operaciones(usuario, datos):
         opcion = input("Selecciona una opción: ")
 
         if opcion == "1":
+            print(datos_globales)
+            print("SEPARACION")
+            print(datos_globales[usuario])
             consultar_saldo(datos_globales[usuario])
 
         elif opcion == "2":
