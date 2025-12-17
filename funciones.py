@@ -176,10 +176,10 @@ def menu_operaciones(usuario, datos):
             ingresar_dinero(usuario)
 
         elif opcion == "3":
-            retirar_dinero(datos_globales[usuario])
+            retirar_dinero(usuario)
 
         elif opcion == "4":
-            transferir(datos_globales[usuario], datos)
+            transferir(usuario)
 
         elif opcion == "5":
             print("Cerrando sesión...")
