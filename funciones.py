@@ -214,7 +214,7 @@ def retirar_dinero(usuario):
     while(True):
         importe_a_sacar=input(f"introduzca el importe que desea retirar de su cuenta {cuentaSeleccionada} (q para cancelar): ")
         if importe_a_sacar.lower()=="q":return False #Salida de metodo
-        if(validarCifra(importe_a_sacar, cuentasUsuario[cuentaSeleccionada], False)):
+        if(validarCifra(importe_a_sacar, cuentasUsuario[cuentaSeleccionada], True)):
             importe_a_sacar=int(importe_a_sacar)
             break
     
