@@ -100,6 +100,7 @@ def crear_cuenta(datos_globales, datos_usuario):
     print(f"\nCuenta de tipo '{tipo}' creada exitosamente con IBAN: {iban}")
 
 
+
 # -----------------------------------
 # Inicio de sesión
 # -----------------------------------
@@ -136,18 +137,17 @@ def autenticar_usuario():
         usuario_input = input("Introduce tu nombre de usuario: ").strip()
         pin_input = input("Introduce tu PIN: ").strip()
 
-        # Buscar usuario en el JSON
-        usuario_encontrado = next(
-            (u for u in usuarios if u.get("usuario") == usuario_input),
-            None
-        )
-
-        if usuario_encontrado is None:
+        # Comprobar si el usuario existe
+        if usuario_input not in usuarios:
             print("El usuario no existe.")
         else:
-            if usuario_encontrado.get("pin") == pin_input:
-                print(f"Acceso concedido.")
-                return usuario_encontrado
+            # Obtener datos del usuario
+            datos_usuario = usuarios[usuario_input]
+
+            if datos_usuario["pin"] == pin_input:
+                print("Acceso concedido.")
+                # Devuelve también el nombre
+                return usuario_input, datos_usuario
             else:
                 print("PIN incorrecto.")
 
