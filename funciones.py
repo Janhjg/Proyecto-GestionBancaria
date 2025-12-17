@@ -173,13 +173,13 @@ def menu_operaciones(usuario, datos):
             consultar_saldo(datos_globales[usuario])
 
         elif opcion == "2":
-            ingresar_dinero(datos_globales[usuario])
+            ingresar_dinero(usuario)
 
         elif opcion == "3":
-            retirar_dinero(datos_globales[usuario])
+            retirar_dinero(usuario)
 
         elif opcion == "4":
-            transferir(datos_globales[usuario], datos)
+            transferir(usuario)
 
         elif opcion == "5":
             print("Cerrando sesión...")
@@ -250,21 +250,24 @@ def validarCifra(cifra, datos, boolValidarRetiro):#Validará tanto si se ha intr
         return False
 
 def ingresar_dinero(usuario):
-    datosUsuario=usuario
-    cuentasUsuario=datosUsuario["cuentas"]
+    datos=cargar_datos_globales()
+    datosUsuarioDict=datos[usuario]
+    cuentaSeleccionada=""
+    importe_a_ingresar=""
 
-    if(not datosUsuario['cuentas']):#verificar que tenga alguna cuenta
+    if(not datosUsuarioDict['cuentas']):#verificar que tenga alguna cuenta
         print("Usted no dispone de cuenta alguna")
         return False
     
     #MOSTRANDO CUENTAS DE USUARIO
-    keysCuentasDeUsuario=cuentasUsuario.keys()
+    keysCuentasDeUsuario=datosUsuarioDict["cuentas"].keys()
+    print("\n|||CUENTA|||")
     print("de las siguientes cuentas:\n")
     #[print(f"{cuenta},\n") for cuenta in list(cuentasDeUsuario.keys]
     for cuenta in keysCuentasDeUsuario:
         
         print("||---||")
-        print(f"||{cuenta}|| SALDO: {cuentasUsuario[str(cuenta)]['saldo']}€")
+        print(f"||{cuenta}|| SALDO: {datosUsuarioDict['cuentas'][str(cuenta)]['saldo']}€")
         print("||---||\n")
 
     #SELECCION CUENTA
@@ -275,14 +278,16 @@ def ingresar_dinero(usuario):
         print("ERROR: La cuenta introducida no coincide con ninguna de tus cuentas.")
 
     #OBTENIENDO IMPORTA A INGRESAR
+    print("\n|||IMPORTE|||")
     while(True):
         importe_a_ingresar=input(f"introduzca el importe que desea ingresar en su cuenta {cuentaSeleccionada} (q para cancelar): ")
         if importe_a_ingresar.lower()=="q":return False #Salida de metodo
-        if(validarCifra(importe_a_ingresar, cuentasUsuario[cuentaSeleccionada],False)):
+        if(validarCifra(importe_a_ingresar, datosUsuarioDict['cuentas'][cuentaSeleccionada],False)):
             importe_a_ingresar=int(importe_a_ingresar)
             break
     
     #MOSTRANDO Y CONFIRMANDO DATOS DE OPERACION
+    print("\n|||CONFIRMACION|||")
     print(f"usted va a realizar un ingreso de {importe_a_ingresar}€ a su cuenta {cuentaSeleccionada}")
     while(True):
         confirmacion=input("¿DESEA CONFIRMAR ESTA OPERACION?, confirmar/denegar: ").lower().strip()
@@ -292,14 +297,62 @@ def ingresar_dinero(usuario):
     
     print("Realizando ingreso....")
     time.sleep(3)
-    datosUsuario["cuentas"][cuentaSeleccionada]["saldo"]+=importe_a_ingresar
-    print(datosUsuario)
-    guardar_datos_globales(datosUsuario)
+    datos[usuario]['cuentas'][cuentaSeleccionada]['saldo']+=importe_a_ingresar
+    guardar_datos_globales(datos)
     print("Ingreso realizado, si desea ver su saldo restante consultelo con la operacion consultar saldo.")
     return True
 
 def retirar_dinero(usuario):
-    pass
+    datos=cargar_datos_globales()
+    datosUsuarioDict=datos[usuario]
+    cuentaSeleccionada=""
+    importe_a_sacar=""
+
+    if(not datosUsuarioDict['cuentas']):#verificar que tenga alguna cuenta
+        print("Usted no dispone de cuenta alguna")
+        return False
+    
+    #MOSTRANDO CUENTAS DE USUARIO
+    keysCuentasDeUsuario=datosUsuarioDict["cuentas"].keys()
+    print("\n|||CUENTA|||")
+    print("de las siguientes cuentas:\n")
+    #[print(f"{cuenta},\n") for cuenta in list(cuentasDeUsuario.keys]
+    for cuenta in keysCuentasDeUsuario:
+        
+        print("||---||")
+        print(f"||{cuenta}|| SALDO: {datosUsuarioDict['cuentas'][str(cuenta)]['saldo']}€")
+        print("||---||\n")
+
+    #SELECCION CUENTA
+    while(True):
+        cuentaSeleccionada=input("seleccione desde que cuenta quiere retirar (q para cancelar): ")
+        if cuentaSeleccionada.lower()=="q":return False#Salida de metodo
+        if cuentaSeleccionada in keysCuentasDeUsuario:break
+        print("ERROR: La cuenta introducida no coincide con ninguna de tus cuentas.")
+
+    #OBTENIENDO IMPORTA A SACAR
+    print("\n|||IMPORTE|||")
+    while(True):
+        importe_a_sacar=input(f"introduzca el importe que desea retirar de su cuenta {cuentaSeleccionada} (q para cancelar): ")
+        if importe_a_sacar.lower()=="q":return False #Salida de metodo
+        if(validarCifra(importe_a_sacar, datosUsuarioDict['cuentas'][cuentaSeleccionada], True)):
+            importe_a_sacar=int(importe_a_sacar)
+            break
+    
+    #MOSTRANDO Y CONFIRMANDO DATOS DE OPERACION
+    print("\n|||CONFIRMACION|||")
+    print(f"usted va a realizar una retirada de {importe_a_sacar}€ desde su cuenta {cuentaSeleccionada}")
+    while(True):
+        confirmacion=input("¿DESEA CONFIRMAR ESTA OPERACION?, confirmar/denegar: ").lower().strip()
+        if confirmacion=="confirmar":break
+        if confirmacion=="denegar":return False#Salida de metodo
+        print("ERROR: Introduzca confirmar o denegar")
+    
+    print("Realizando retirada....")
+    time.sleep(3)
+    datos[usuario]['cuentas'][cuentaSeleccionada]['saldo']-=importe_a_sacar
+    guardar_datos_globales(datos)
+    return True
 
 
 def transferir():
