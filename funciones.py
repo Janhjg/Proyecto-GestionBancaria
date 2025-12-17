@@ -292,6 +292,7 @@ def ingresar_dinero(usuario):
     time.sleep(3)
     datosUsuario["cuentas"][cuentaSeleccionada]["saldo"]+=importe_a_ingresar
     guardar_datos_globales(datos)
+    print("Ingreso realizado, si desea ver su saldo restante consultelo con la operacion consultar saldo.")
     return True
 
 def retirar_dinero(saldo):
