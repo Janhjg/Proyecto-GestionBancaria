@@ -72,13 +72,11 @@ def generar_iban(datos_globales):
         if iban not in ibans_existentes:
             return iban
 
-def crear_cuenta(datos_globales, datos_usuario):
-    """Crea una cuenta para el usuario proporcionado."""
+def crear_cuenta(datos_globales, usuario):
     print("\nCREAR NUEVA CUENTA")
 
-    # Aseguramos que haya un usuario válido antes de continuar
-    if datos_usuario is None:
-        print("Error: Se requiere un objeto de usuario válido para crear una cuenta.")
+    if usuario not in datos_globales:
+        print("Error: usuario no válido.")
         return
 
     tipo = input("Tipo de cuenta (ahorros / corriente): ").strip().lower()
@@ -86,18 +84,16 @@ def crear_cuenta(datos_globales, datos_usuario):
         print("Tipo de cuenta no válido.")
         return
 
-    # El IBAN se genera a nivel global
-    iban = generar_iban(datos_globales) 
+    iban = generar_iban(datos_globales)
 
-    # Agrega la cuenta al diccionario de cuentas del usuario actual
-    datos_usuario["cuentas"][iban] = {
+    datos_globales[usuario]["cuentas"][iban] = {
         "tipo": tipo,
         "saldo": 0.00
     }
 
-    # Guardar la estructura global para que el cambio persista en usuarios.json
     guardar_datos_globales(datos_globales)
-    print(f"\nCuenta de tipo '{tipo}' creada exitosamente con IBAN: {iban}")
+    print(f"\nCuenta '{tipo}' creada correctamente con IBAN {iban}")
+
 
 
 
@@ -168,6 +164,7 @@ def menu_operaciones(usuario, datos):
         print("3. Retirar dinero")
         print("4. Transferir dinero")
         print("5. Cerrar sesión")
+        print("6. Crear cuenta")
 
         opcion = input("Selecciona una opción: ")
 
@@ -186,6 +183,11 @@ def menu_operaciones(usuario, datos):
         elif opcion == "5":
             print("Cerrando sesión...")
             break
+
+        elif opcion == "6":
+            datos_globales = cargar_datos_globales()
+            crear_cuenta(datos_globales, usuario)
+
 
         else:
             print("Opción no válida.")
