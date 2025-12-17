@@ -165,22 +165,24 @@ def consultar_saldo(saldo):
     print(f"Su saldo actual es: {saldo} euros.")
     return saldo
 
-def ingresar_dinero(saldo):
-    pass
-
-def validarCifra(cifra, datos):#Validará tanto si se ha introducido un numero y coherente y si tiene saldo para operaciones de retiro 
+def validarCifra(cifra, datos, boolValidarRetiro):#Validará tanto si se ha introducido un numero y coherente y si tiene saldo para operaciones de retiro 
     try:
-        if datos["saldo"] >= int(cifra) > 0:
-            return True
-        elif int(cifra)<=0:
-            print("ERROR: Valor incorrecto para la cifra")
+        if (datos["saldo"] < int(cifra) and boolValidarRetiro) or int(cifra)<= 0 :#si no tiene fondos en caso de querer validarlo o si ha dado una cifra negativa
+            #Siempre se compararán los fondos con la cifra indicada cuando boolRetiro sea true en caso contrario aunque la cifra introducida sea mayor que los fondos se skipeará este if, dado que se entiende que para ingresar no se necesita esa comprobacion
+            if int(cifra)<= 0:
+                print("ERROR: Valor incorrecto para la cifra")
+                
+            else:
+                print("ERROR: Usted no dispone de saldo suficiente, por favor consulte su saldo")
             return False
         else:
-            print("ERROR: Usted no dispone de saldo suficiente, por favor consulte su saldo")
-            return False
+            return True
     except: #en caso de que no sea un numero
         print("ERROR: Valor incorrecto para la cifra")
         return False
+
+def ingresar_dinero(saldo):
+    pass
     
 def retirar_dinero(usuario):
     datos=cargar_datos_globales()
@@ -212,7 +214,7 @@ def retirar_dinero(usuario):
     while(True):
         importe_a_sacar=input(f"introduzca el importe que desea retirar de su cuenta {cuentaSeleccionada} (q para cancelar): ")
         if importe_a_sacar.lower()=="q":return False #Salida de metodo
-        if(validarCifra(importe_a_sacar, cuentasUsuario[cuentaSeleccionada])):
+        if(validarCifra(importe_a_sacar, cuentasUsuario[cuentaSeleccionada], False)):
             importe_a_sacar=int(importe_a_sacar)
             break
     
@@ -234,4 +236,28 @@ def transferir():
     pass
 
 if __name__=="__main__":
-    pass
+    #retirar_dinero("ruben")
+    #INGRESAR
+    datos={
+                "tipo": "corriente",
+                "saldo": 1
+            }
+    assert validarCifra(2, datos, False)==True,"No debe validar fondos menor que cifra"
+    assert validarCifra(0, datos, False)==False,"No esta validando cifra a 0"
+    assert validarCifra(-1, datos, False)==False,"No esta validando cifra a -1"
+    assert validarCifra("0", datos, False)==False,"Debe validar cifra a numero"
+    assert validarCifra("-1", datos, False)==False,"Debe validar cifra a numero"
+    assert validarCifra("2", datos, False)==True,"Debe validar cifra a numero"
+    assert validarCifra("uno", datos, False)==False,"Debe validar cifra a numero"
+
+    #RETIRAR
+    assert validarCifra(2, datos, True)==False,"debe validar fondos menor que cifra"
+    assert validarCifra(1, datos, True)==True,"tiene que dar True"
+    assert validarCifra(0, datos, True)==False,"No esta validando cifra a 0"
+    assert validarCifra(-1, datos, True)==False,"No esta validando cifra a -1"
+    assert validarCifra("0", datos, True)==False,"Debe validar cifra a numero"
+    assert validarCifra("-1", datos, True)==False,"Debe validar cifra a numero"
+    assert validarCifra("1", datos, True)==True,"Debe validar cifra a numero"
+    assert validarCifra("2", datos, True)==False,"Debe validar cifra a numero"
+    assert validarCifra("uno", datos, True)==False,"Debe validar cifra a numero"
+    print("TODO OK")
