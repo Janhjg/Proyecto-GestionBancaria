@@ -235,21 +235,22 @@ def consultar_saldo(datos_usuario):
 
 def validarCifra(cifra, datos, boolValidarRetiro):#Validará tanto si se ha introducido un numero y coherente y si tiene saldo para operaciones de retiro 
     try:
-        if datos["saldo"] >= int(cifra) > 0:
-            return True
-        elif datos["saldo"]<int(cifra and boolValidarRetiro):#si boolvalidarRetiro es false quiere decir que la operacion que lo ha llamado no necesita validar retiro porque no es para un retiro porloque skipeará este if
-            print("ERROR: Usted no dispone de saldo suficiente, por favor consulte su saldo")
+        if (datos["saldo"] < int(cifra) and boolValidarRetiro) or int(cifra)<= 0 :#si no tiene fondos en caso de querer validarlo o si ha dado una cifra negativa
+            #Siempre se compararán los fondos con la cifra indicada cuando boolRetiro sea true en caso contrario aunque la cifra introducida sea mayor que los fondos se skipeará este if, dado que se entiende que para ingresar no se necesita esa comprobacion
+            if int(cifra)<= 0:
+                print("ERROR: Valor incorrecto para la cifra")
+                
+            else:
+                print("ERROR: Usted no dispone de saldo suficiente, por favor consulte su saldo")
             return False
         else:
-            print("ERROR: Valor incorrecto para la cifra")
-            return False
+            return True
     except: #en caso de que no sea un numero
         print("ERROR: Valor incorrecto para la cifra")
         return False
 
 def ingresar_dinero(usuario):
-    datos=cargar_datos_globales()
-    datosUsuario=datos[usuario]
+    datosUsuario=usuario
     cuentasUsuario=datosUsuario["cuentas"]
 
     if(not datosUsuario['cuentas']):#verificar que tenga alguna cuenta
@@ -292,7 +293,8 @@ def ingresar_dinero(usuario):
     print("Realizando ingreso....")
     time.sleep(3)
     datosUsuario["cuentas"][cuentaSeleccionada]["saldo"]+=importe_a_ingresar
-    guardar_datos_globales(datos)
+    print(datosUsuario)
+    guardar_datos_globales(datosUsuario)
     print("Ingreso realizado, si desea ver su saldo restante consultelo con la operacion consultar saldo.")
     return True
 
