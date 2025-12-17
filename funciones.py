@@ -73,13 +73,11 @@ def generar_iban(datos_globales):
         if iban not in ibans_existentes:
             return iban
 
-def crear_cuenta(datos_globales, datos_usuario):
-    """Crea una cuenta para el usuario proporcionado."""
+def crear_cuenta(datos_globales, usuario):
     print("\nCREAR NUEVA CUENTA")
 
-    # Aseguramos que haya un usuario válido antes de continuar
-    if datos_usuario is None:
-        print("Error: Se requiere un objeto de usuario válido para crear una cuenta.")
+    if usuario not in datos_globales:
+        print("Error: usuario no válido.")
         return
 
     tipo = input("Tipo de cuenta (ahorros / corriente): ").strip().lower()
@@ -87,18 +85,16 @@ def crear_cuenta(datos_globales, datos_usuario):
         print("Tipo de cuenta no válido.")
         return
 
-    # El IBAN se genera a nivel global
-    iban = generar_iban(datos_globales) 
+    iban = generar_iban(datos_globales)
 
-    # Agrega la cuenta al diccionario de cuentas del usuario actual
-    datos_usuario["cuentas"][iban] = {
+    datos_globales[usuario]["cuentas"][iban] = {
         "tipo": tipo,
         "saldo": 0.00
     }
 
-    # Guardar la estructura global para que el cambio persista en usuarios.json
     guardar_datos_globales(datos_globales)
-    print(f"\nCuenta de tipo '{tipo}' creada exitosamente con IBAN: {iban}")
+    print(f"\nCuenta '{tipo}' creada correctamente con IBAN {iban}")
+
 
 
 
@@ -169,24 +165,29 @@ def menu_operaciones(usuario, datos):
         print("3. Retirar dinero")
         print("4. Transferir dinero")
         print("5. Cerrar sesión")
-
+        print("6. Crear cuenta")
+        datos_globales = cargar_datos_globales()
         opcion = input("Selecciona una opción: ")
 
         if opcion == "1":
-            consultar_saldo(datos)
+            consultar_saldo(datos_globales[usuario])
 
         elif opcion == "2":
-            ingresar_dinero(datos)
+            ingresar_dinero(datos_globales[usuario])
 
         elif opcion == "3":
-            retirar_dinero(datos)
+            retirar_dinero(datos_globales[usuario])
 
         elif opcion == "4":
-            transferir(usuario, datos)
+            transferir(datos_globales[usuario], datos)
 
         elif opcion == "5":
             print("Cerrando sesión...")
             break
+
+        elif opcion == "6":
+            crear_cuenta(datos_globales, usuario)
+
 
         else:
             print("Opción no válida.")
@@ -234,21 +235,22 @@ def consultar_saldo(datos_usuario):
 
 def validarCifra(cifra, datos, boolValidarRetiro):#Validará tanto si se ha introducido un numero y coherente y si tiene saldo para operaciones de retiro 
     try:
-        if datos["saldo"] >= int(cifra) > 0:
-            return True
-        elif datos["saldo"]<int(cifra and boolValidarRetiro):#si boolvalidarRetiro es false quiere decir que la operacion que lo ha llamado no necesita validar retiro porque no es para un retiro porloque skipeará este if
-            print("ERROR: Usted no dispone de saldo suficiente, por favor consulte su saldo")
+        if (datos["saldo"] < int(cifra) and boolValidarRetiro) or int(cifra)<= 0 :#si no tiene fondos en caso de querer validarlo o si ha dado una cifra negativa
+            #Siempre se compararán los fondos con la cifra indicada cuando boolRetiro sea true en caso contrario aunque la cifra introducida sea mayor que los fondos se skipeará este if, dado que se entiende que para ingresar no se necesita esa comprobacion
+            if int(cifra)<= 0:
+                print("ERROR: Valor incorrecto para la cifra")
+                
+            else:
+                print("ERROR: Usted no dispone de saldo suficiente, por favor consulte su saldo")
             return False
         else:
-            print("ERROR: Valor incorrecto para la cifra")
-            return False
+            return True
     except: #en caso de que no sea un numero
         print("ERROR: Valor incorrecto para la cifra")
         return False
 
 def ingresar_dinero(usuario):
-    datos=cargar_datos_globales()
-    datosUsuario=datos[usuario]
+    datosUsuario=usuario
     cuentasUsuario=datosUsuario["cuentas"]
 
     if(not datosUsuario['cuentas']):#verificar que tenga alguna cuenta
@@ -291,7 +293,8 @@ def ingresar_dinero(usuario):
     print("Realizando ingreso....")
     time.sleep(3)
     datosUsuario["cuentas"][cuentaSeleccionada]["saldo"]+=importe_a_ingresar
-    guardar_datos_globales(datos)
+    print(datosUsuario)
+    guardar_datos_globales(datosUsuario)
     print("Ingreso realizado, si desea ver su saldo restante consultelo con la operacion consultar saldo.")
     return True
 
