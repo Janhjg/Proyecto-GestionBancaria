@@ -97,8 +97,25 @@ def crear_cuenta(datos):
 def consultar_saldo():
     pass
 
+def validarCifra(cifra, datos, boolValidarRetiro):#Validará tanto si se ha introducido un numero y coherente y si tiene saldo para operaciones de retiro 
+    try:
+        if (datos["saldo"] < int(cifra) and boolValidarRetiro) or int(cifra)<= 0 :#si no tiene fondos en caso de querer validarlo o si ha dado una cifra negativa
+            #Siempre se compararán los fondos con la cifra indicada cuando boolRetiro sea true en caso contrario aunque la cifra introducida sea mayor que los fondos se skipeará este if, dado que se entiende que para ingresar no se necesita esa comprobacion
+            if int(cifra)<= 0:
+                print("ERROR: Valor incorrecto para la cifra")
+                
+            else:
+                print("ERROR: Usted no dispone de saldo suficiente, por favor consulte su saldo")
+            return False
+        else:
+            return True
+    except: #en caso de que no sea un numero
+        print("ERROR: Valor incorrecto para la cifra")
+        return False
+
 def ingresar_dinero():
     pass 
+
 def validarCifra(cifra, datos):#Validará tanto si se ha introducido un numero y coherente y si tiene saldo para operaciones de retiro 
     try:
         if datos["saldo"] >= int(cifra) > 0:
@@ -159,7 +176,7 @@ def transferir(usuario):
     while(True):
         importe_a_transferir=input("introduzca el importe que desea transferir (q para cancelar): ")
         if importe_a_transferir.lower()=="q":return False #Salida de metodo
-        if(validarCifra(importe_a_transferir, cuentasUsuarioOrigen[cuentaOrigen])):
+        if(validarCifra(importe_a_transferir, cuentasUsuarioOrigen[cuentaOrigen], True)):
             importe_a_transferir=int(importe_a_transferir)
             break
             
