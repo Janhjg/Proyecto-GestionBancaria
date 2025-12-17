@@ -101,6 +101,7 @@ def crear_cuenta(datos_globales, datos_usuario):
     print(f"\nCuenta de tipo '{tipo}' creada exitosamente con IBAN: {iban}")
 
 
+
 # -----------------------------------
 # Inicio de sesión
 # -----------------------------------
@@ -137,18 +138,17 @@ def autenticar_usuario():
         usuario_input = input("Introduce tu nombre de usuario: ").strip()
         pin_input = input("Introduce tu PIN: ").strip()
 
-        # Buscar usuario en el JSON
-        usuario_encontrado = next(
-            (u for u in usuarios if u.get("usuario") == usuario_input),
-            None
-        )
-
-        if usuario_encontrado is None:
+        # Comprobar si el usuario existe
+        if usuario_input not in usuarios:
             print("El usuario no existe.")
         else:
-            if usuario_encontrado.get("pin") == pin_input:
-                print(f"Acceso concedido.")
-                return usuario_encontrado
+            # Obtener datos del usuario
+            datos_usuario = usuarios[usuario_input]
+
+            if datos_usuario["pin"] == pin_input:
+                print("Acceso concedido.")
+                # Devuelve también el nombre
+                return usuario_input, datos_usuario
             else:
                 print("PIN incorrecto.")
 
@@ -158,12 +158,79 @@ def autenticar_usuario():
     print("Demasiados intentos fallidos. Acceso bloqueado.")
     return False
 
+# -----------------------------------
+# Menú OPERACIONES
+# -----------------------------------
+def menu_operaciones(usuario, datos):
+    while True:
+        print(f"\n=== MENÚ DE OPERACIONES ({usuario}) ===")
+        print("1. Consultar saldo")
+        print("2. Ingresar dinero")
+        print("3. Retirar dinero")
+        print("4. Transferir dinero")
+        print("5. Cerrar sesión")
 
-#Operaciones bancarias
+        opcion = input("Selecciona una opción: ")
 
-def consultar_saldo(saldo):
-    print(f"Su saldo actual es: {saldo} euros.")
-    return saldo
+        if opcion == "1":
+            consultar_saldo(datos)
+
+        elif opcion == "2":
+            ingresar_dinero(datos)
+
+        elif opcion == "3":
+            retirar_dinero(datos)
+
+        elif opcion == "4":
+            transferir(usuario, datos)
+
+        elif opcion == "5":
+            print("Cerrando sesión...")
+            break
+
+        else:
+            print("Opción no válida.")
+
+
+# -----------------------------------
+# Selección de cuenta
+# -----------------------------------
+
+def seleccionar_cuenta(datos):
+    cuentas = datos["cuentas"]
+
+    if not cuentas:
+        print("No tienes cuentas.")
+        return None
+
+    print("\nCuentas disponibles:")
+    for num in cuentas:
+        print(f"- {num}")
+
+    cuenta = input("Selecciona una cuenta: ")
+
+    if cuenta not in cuentas:
+        print("Cuenta no válida.")
+        return None
+
+    return cuenta
+
+
+
+# -----------------------------------
+# Operaciones bancarias
+# -----------------------------------
+
+def consultar_saldo(datos_usuario):
+    """Muestra el saldo de las cuentas del usuario actual."""
+    cuentas = datos_usuario.get("cuentas", {})
+    if not cuentas:
+        print("\n[!] No tienes cuentas registradas.")
+        return
+
+    print("ESTADO DE TUS CUENTAS")
+    for iban, info in cuentas.items():
+        print(f"IBAN: {iban} | Tipo: {info['tipo'].upper()} | Saldo: €{info['saldo']:.2f}")
 
 def validarCifra(cifra, datos, boolValidarRetiro):#Validará tanto si se ha introducido un numero y coherente y si tiene saldo para operaciones de retiro 
     try:
