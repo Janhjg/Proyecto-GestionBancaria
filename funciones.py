@@ -306,5 +306,82 @@ def retirar_dinero():
     pass
 
 
-def transferir():
-    pass
+def transferir(usuario):
+    #Retornará false si el usuario ha cancelado la operacion
+    datos=cargar_datos_globales()
+    UsuarioSesionActual=usuario
+
+    #ORIGEN
+    datosUsuario=datos[UsuarioSesionActual]
+    cuentasUsuarioOrigen=dict(datosUsuario["cuentas"])
+    cuentaOrigen=""#IBAN ORIGEN
+    
+    importe_a_transferir=0
+    
+    #DESTINO
+    UsuarioDestino=""
+    cuentaDestino=""#IBAN DESTINO
+    
+    
+    if(not datosUsuario['cuentas']):#verificar que tenga alguna cuenta
+        print("Usted no dispone de cuenta alguna")
+        return False
+    print("\n|||CUENTA ORIGEN|||")
+    #MOSTRANDO CUENTAS DE ORIGEN
+    keysCuentasDeUsuario=cuentasUsuarioOrigen.keys()
+    print("de las siguientes cuentas:\n")
+    #[print(f"{cuenta},\n") for cuenta in list(cuentasDeUsuario.keys]
+    for cuenta in keysCuentasDeUsuario:
+        
+        print("||---||")
+        print(f"||{cuenta}|| SALDO: {cuentasUsuarioOrigen[str(cuenta)]['saldo']}€")
+        print("||---||\n")
+
+    #SELECCION CUENTA ORIGEN
+    while(True):
+        cuentaOrigen=input("seleccione desde que cuenta quiere transferir (q para cancelar): ")
+        if cuentaOrigen.lower()=="q":return False#Salida de metodo
+        if cuentaOrigen in keysCuentasDeUsuario:break
+        print("ERROR: La cuenta introducida no coincide con ninguna de tus cuentas.")
+    
+    print("\n|||IMPORTE|||")
+    #OBTENIENDO IMPORTA A TRANSFERIR
+    while(True):
+        importe_a_transferir=input("introduzca el importe que desea transferir (q para cancelar): ")
+        if importe_a_transferir.lower()=="q":return False #Salida de metodo
+        if(validarCifra(importe_a_transferir, cuentasUsuarioOrigen[cuentaOrigen], True)):
+            importe_a_transferir=int(importe_a_transferir)
+            break
+            
+    
+    print("\n|||CUENTA DESTINO|||")
+    #OBTENIENDO CUENTA DESTINO
+    while(True):
+        cuentaInput=input("introduzca la cuenta a la que desea transferir (q para cancelar): ")
+        if cuentaInput.lower()=="q":return False#Salida de metodo
+        for usuario in list(datos.keys()):
+            cuentasUsuarioDestino=list(dict(datos[usuario]["cuentas"]).keys())
+            if cuentaInput in cuentasUsuarioDestino:
+                cuentaDestino=cuentaInput
+                UsuarioDestino=usuario
+                break
+        if(cuentaDestino):
+            break
+        print("ERROR: La cuenta introducida no coincide con ninguna de las cuentas registradas")
+    print("\n|||CONFIRMACION|||")
+    #MOSTRANDO Y CONFIRMANDO DATOS DE OPERACION
+    print(f"usted va a realizar una transferencia de {importe_a_transferir}€ desde su cuenta {cuentaOrigen} a la cuenta destino {cuentaDestino} del destinatario {UsuarioDestino}")
+    while(True):
+        confirmacion=input("¿DESEA CONFIRMAR ESTA OPERACION?, confirmar/denegar: ").lower().strip()
+        if confirmacion=="confirmar":break
+        if confirmacion=="denegar":return False#Salida de metodo
+        print("ERROR: Introduzca confirmar o denegar")
+    
+    print("Realizando transferencia....")
+    time.sleep(3)
+
+    datos[UsuarioSesionActual]['cuentas'][cuentaOrigen]['saldo']-=importe_a_transferir
+    datos[UsuarioDestino]['cuentas'][cuentaDestino]['saldo']+=importe_a_transferir
+    print("Transferencia realizada, si desea ver su saldo restante consultelo con la operacion consultar saldo.")
+    guardar_datos_globales(datos)
+    return True
