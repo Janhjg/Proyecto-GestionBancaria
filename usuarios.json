@@ -4,7 +4,7 @@
         "cuentas": {
             "233": {
                 "tipo": "ahorros",
-                "saldo": 0.0
+                "saldo": 100.0
             },
             "328": {
                 "tipo": "corriente",

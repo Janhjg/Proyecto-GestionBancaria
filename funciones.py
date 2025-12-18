@@ -1,3 +1,4 @@
+from decimal import Decimal
 import json
 import random
 import time
@@ -235,9 +236,9 @@ def consultar_saldo(datos_usuario):
 
 def validarCifra(cifra, datos, boolValidarRetiro):#Validará tanto si se ha introducido un numero y coherente y si tiene saldo para operaciones de retiro 
     try:
-        if (datos["saldo"] < int(cifra) and boolValidarRetiro) or int(cifra)<= 0 :#si no tiene fondos en caso de querer validarlo o si ha dado una cifra negativa
+        if (datos["saldo"] < Decimal(cifra) and boolValidarRetiro) or Decimal(cifra)<= 0 or Decimal(cifra).as_tuple().exponent < -2 :#si no tiene fondos en caso de querer validarlo o si ha dado una cifra negativa
             #Siempre se compararán los fondos con la cifra indicada cuando boolRetiro sea true en caso contrario aunque la cifra introducida sea mayor que los fondos se skipeará este if, dado que se entiende que para ingresar no se necesita esa comprobacion
-            if int(cifra)<= 0:
+            if Decimal(cifra)<= 0 or Decimal(cifra).as_tuple().exponent < -2:
                 print("ERROR: Valor incorrecto para la cifra")
                 
             else:
