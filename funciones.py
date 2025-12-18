@@ -1,4 +1,4 @@
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 import json
 import random
 import time
@@ -284,7 +284,7 @@ def ingresar_dinero(usuario):
         importe_a_ingresar=input(f"introduzca el importe que desea ingresar en su cuenta {cuentaSeleccionada} (q para cancelar): ")
         if importe_a_ingresar.lower()=="q":return False #Salida de metodo
         if(validarCifra(importe_a_ingresar, datosUsuarioDict['cuentas'][cuentaSeleccionada],False)):
-            importe_a_ingresar=int(importe_a_ingresar)
+            importe_a_ingresar = Decimal(importe_a_ingresar).quantize(Decimal("0.00"), rounding=ROUND_HALF_UP)
             break
     
     #MOSTRANDO Y CONFIRMANDO DATOS DE OPERACION
@@ -298,7 +298,7 @@ def ingresar_dinero(usuario):
     
     print("Realizando ingreso....")
     time.sleep(3)
-    datos[usuario]['cuentas'][cuentaSeleccionada]['saldo']+=importe_a_ingresar
+    datos[usuario]['cuentas'][cuentaSeleccionada]['saldo']+=float(importe_a_ingresar)
     guardar_datos_globales(datos)
     print("Ingreso realizado, si desea ver su saldo restante consultelo con la operacion consultar saldo.")
     return True
