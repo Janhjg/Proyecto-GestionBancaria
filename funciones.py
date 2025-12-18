@@ -437,3 +437,4 @@ def transferir(usuario):
     print("Transferencia realizada, si desea ver su saldo restante consultelo con la operacion consultar saldo.")
     guardar_datos_globales(datos)
     return True
+
