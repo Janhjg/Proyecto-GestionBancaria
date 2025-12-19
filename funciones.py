@@ -239,7 +239,7 @@ def validarCifra(cifra, datos, boolValidarRetiro):#Validará tanto si se ha intr
         if (datos["saldo"] < Decimal(cifra) and boolValidarRetiro) or Decimal(cifra)<= 0 or Decimal(cifra).as_tuple().exponent < -2 :#si no tiene fondos en caso de querer validarlo o si ha dado una cifra negativa
             #Siempre se compararán los fondos con la cifra indicada cuando boolRetiro sea true en caso contrario aunque la cifra introducida sea mayor que los fondos se skipeará este if, dado que se entiende que para ingresar no se necesita esa comprobacion
             if Decimal(cifra)<= 0 or Decimal(cifra).as_tuple().exponent < -2:
-                print("ERROR: Valor incorrecto para la cifra")
+                print(f"ERROR: Valor incorrecto para la cifra {Decimal(cifra)} exponentes: {Decimal(cifra).as_tuple().exponent}")
                 
             else:
                 print("ERROR: Usted no dispone de saldo suficiente, por favor consulte su saldo")
@@ -435,3 +435,43 @@ def transferir(usuario):
     print("Transferencia realizada, si desea ver su saldo restante consultelo con la operacion consultar saldo.")
     guardar_datos_globales(datos)
     return True
+
+if __name__=="__main__":
+    
+    #retirar_dinero("ruben")
+    #INGRESAR
+    datos={
+                "tipo": "corriente",
+                "saldo": 1
+    }
+    assert validarCifra("2", datos, False)==True,"No debe validar fondos menor que cifra"
+    assert validarCifra("2.4", datos, False)==True,"No debe validar fondos menor que cifra"
+    assert validarCifra("0", datos, False)==False,"No esta validando cifra a 0"
+    assert validarCifra("-1", datos, False)==False,"No esta validando cifra a -1"
+    assert validarCifra("-1.3", datos, False)==False,"No esta validando cifra a -1"
+    assert validarCifra("0", datos, False)==False,"Debe validar cifra a numero"
+    assert validarCifra("-1", datos, False)==False,"Debe validar cifra a numero"
+    assert validarCifra("-1.6", datos, False)==False,"Debe validar cifra a numero"
+    assert validarCifra("2", datos, False)==True,"Debe validar cifra a numero"
+    assert validarCifra("2.4", datos, False)==True,"Debe validar cifra a numero"
+    assert validarCifra("uno", datos, False)==False,"Debe validar cifra a numero"
+
+    #RETIRAR
+    assert validarCifra("2", datos, True)==False,"debe validar fondos menor que cifra"
+    assert validarCifra("1", datos, True)==True,"tiene que dar True"
+    assert validarCifra("0", datos, True)==False,"No esta validando cifra a 0"
+    assert validarCifra("-1", datos, True)==False,"No esta validando cifra a -1"
+    assert validarCifra("-1", datos, True)==False,"No esta validando cifra a -1"
+    assert validarCifra("0", datos, True)==False,"Debe validar cifra a numero"
+    assert validarCifra("-1", datos, True)==False,"Debe validar cifra a numero"
+    assert validarCifra("-1.5", datos, True)==False,"Debe validar cifra a numero"
+    assert validarCifra("1", datos, True)==True,"Debe validar cifra a numero"
+    assert validarCifra("0.50", datos, True)==True,"Debe validar cifra a numero"
+    assert validarCifra("0.500", datos, True)==False,"Debe validar cifra a numero"
+    assert validarCifra("-0.50", datos, True)==False,"Debe validar cifra a numero"
+    assert validarCifra("-0.500", datos, True)==False,"Debe validar cifra a numero"
+    assert validarCifra("1.3", datos, True)==False,"Debe validar cifra a numero"
+    assert validarCifra("2", datos, True)==False,"Debe validar cifra a numero"
+    assert validarCifra("2.3", datos, True)==False,"Debe validar cifra a numero"
+    assert validarCifra("uno", datos, True)==False,"Debe validar cifra a numero"
+    print("TODO OK")
