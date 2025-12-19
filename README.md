@@ -6,13 +6,14 @@ Este proyecto es un mini sistema bancario en Python que simula operaciones bási
 ## Funcionalidades Principales
 
 ### Menú Gestion de usuario
-* Crear nuevo usuario
+* Crear nuevo usuario (usuario, PIN)
 * Inicio de sesión (Accede a menú de operaciones)
-* Validación
-* Evitar perfiles duplicados
+* Salir de aplicación
 
 ### Menú Operaciones bancarias
 * Consultar saldo
 * Ingresar saldo
 * Retirar dinero
 * Transferir dinero entre cuentas
+* Crear cuenta Ahorro/corriente -> Se genera un IBAN para cuenta
+* Salir de sesión (Vuelve a menú de gestión de usuario)
