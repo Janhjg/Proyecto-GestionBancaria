@@ -15,5 +15,5 @@ Este proyecto es un mini sistema bancario en Python que simula operaciones bási
 * Ingresar saldo
 * Retirar dinero
 * Transferir dinero entre cuentas
-* Crear cuenta Ahorro/corriente -> Se genera un IBAN para cuenta
+* Crear cuenta Ahorro/corriente -> Se genera un número de cuenta para cada una
 * Salir de sesión (Vuelve a menú de gestión de usuario)
